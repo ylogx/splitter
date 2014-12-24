@@ -35,10 +35,10 @@ def splitter(in1, in2):
         #print(dirpath, dirnames, filenames)
         filename_count = len(filenames)
         print('Working in', dirpath, ':\n',
-                '  There are', filename_count, 'files &',
+                '  ', 'There are', filename_count, 'files &',
                 len(dirnames), 'directories in it')
         for file in filenames:
-            print(filename_count, '. ', sep='', end='')
+            print('    ', filename_count, '. ', sep='', end='')
             filename_count -= 1
             filename = os.path.join(dirpath, file)
             output_dir = get_output_directory(file)
