@@ -10,11 +10,11 @@ def init_dir(directory):
 def get_output_directory(file):
     extension = file.split('.')[-1]
     output_dir = None
-    if (extension in ['jpg', 'jpeg', 'png', 'tiff', 'bmp']):
+    if extension in ['jpg', 'jpeg', 'png', 'tiff', 'bmp']:
         output_dir = 'images'
-    elif (extension == ['c', 'cpp', 'java', 'jar', 'py', 'sh']):
+    elif extension in ['c', 'cpp', 'java', 'jar', 'py', 'sh']:
         output_dir = 'code'
-    elif (extension in ['mp4', 'mkv', 'avi', 'flv', '3gp', 'mov']):
+    elif extension in ['mp4', 'mkv', 'avi', 'flv', '3gp', 'mov']:
         output_dir = 'videos'
     return output_dir
 
@@ -32,11 +32,14 @@ def splitter(in1, in2):
                 or dirpath == './code'):
             print('Skipping ', dirpath)
             continue
-        print(dirpath, dirnames, filenames)
+        #print(dirpath, dirnames, filenames)
+        filename_count = len(filenames)
         print('Working in', dirpath, ':\n',
-                '  There are', len(filenames), 'files &',
+                '  There are', filename_count, 'files &',
                 len(dirnames), 'directories in it')
         for file in filenames:
+            print(filename_count, '. ', sep='', end='')
+            filename_count -= 1
             filename = os.path.join(dirpath, file)
             output_dir = get_output_directory(file)
             if output_dir:
