@@ -3,7 +3,6 @@ import os
 import sys
 
 def init_dir(directory):
-    print('Given', directory)
     if not os.path.exists(directory):
         print('Creating directory:', directory)
         os.makedirs(directory)
@@ -20,6 +19,8 @@ def get_output_directory(file):
         output_dir = 'videos'
     elif extension in ['mp3', 'm4a']:
         output_dir = 'music'
+    elif file_size == 0:
+        output_dir = 'zeroes'
     elif file_size > 0 and file_size <= 10000:
         output_dir = 'ultra-small'
     elif file_size > 10001 and file_size <= 100000:
@@ -34,14 +35,17 @@ def make_the_move(output_dir, filename):
     init_dir(output_dir)
     src = filename
     dest = os.path.join(output_dir, filename)
+    dest = os.path.relpath(dest)
     init_dir(os.path.dirname(dest))
     os.rename(src, dest)
-    print('   ', 'Moved', src, 'to', dest)
+    print('   ', '  ', 'Moved', src, 'to', dest)
 
 def splitter(in1, in2):
+    print('Traversing', in1)
     for (dirpath, dirnames, filenames) in os.walk(in1):
-        if (dirpath in ['./images', './videos', './code', './ultra-small',
-                        './small', './medium', './large']):
+        #dirpath = os.path.relpath(dirpath)
+        if (dirpath in ['./images', './videos', './code', './zeroes',
+                        './ultra-small', './small', './medium', './large']):
             print('Skipping ', dirpath)
             continue
         #print(dirpath, dirnames, filenames)
@@ -62,7 +66,6 @@ def splitter(in1, in2):
 
 def main():
     argc = len(sys.argv)
-    print('Argument len: ', argc)
     if argc < 2:
         print('Error: No arguments!')
         return
